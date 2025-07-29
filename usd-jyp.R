@@ -1,0 +1,13 @@
+library(quantmod)
+library(fBasics)
+library(ggplot2)
+data <- read.table("usjyp.txt", header=TRUE)
+data$date <- as.Date(with(data,paste(year,mon,day,sep="-")),"%Y-%m-%d")
+data$log_returns <- c(NA, diff(log(data$rate)))
+plot(data$date, data$log_returns, type="l", xlab="Date", ylab="Log")
+normalTest(data$rate,method="jb")
+mean(data$rate)
+sd(data$rate)
+skewness(data$rate)
+kurtosis(data$rate)
+
